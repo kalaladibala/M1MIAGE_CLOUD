@@ -1,0 +1,24 @@
+indexes:
+- kind: "Petition"
+  properties:
+  - name: "nbSignataire"
+    direction: desc
+  - name: "description"
+    direction: asc
+  - name: "objectifSignataire"
+    direction: asc
+  - name: "proprietaire"
+    direction: asc
+  - name: "titre"
+    direction: asc
+  - name: "img_url"
+    direction: asc
+- kind: "Petition"
+  properties:
+  - name: "nbSignataire"
+    direction: desc
+  - name: "description"
+  - name: "objectifSignataire"
+  - name: "proprietaire"
+  - name: "titre"
+  - name: "img_url"

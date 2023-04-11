@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrefixServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">WebAndCloud</a> &gt; <a href="index.source.html" class="el_package">foo</a> &gt; <span class="el_source">PrefixServlet.java</span></div><h1>PrefixServlet.java</h1><pre class="source lang-java linenums">package foo;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import  java.util.concurrent.ThreadLocalRandom;
+
+@WebServlet(name = &quot;PrefixServlet&quot;, urlPatterns = { &quot;/prefix&quot; })
+<span class="nc" id="L34">public class PrefixServlet extends HttpServlet {</span>
+
+<span class="nc" id="L36">	static Random r = new Random();</span>
+
+	
+	public LocalDate between(LocalDate startInclusive, LocalDate endExclusive) {
+<span class="nc" id="L40">	    long startEpochDay = startInclusive.toEpochDay();</span>
+<span class="nc" id="L41">	    long endEpochDay = endExclusive.toEpochDay();</span>
+	    long randomDay = ThreadLocalRandom
+<span class="nc" id="L43">	    	      .current()</span>
+<span class="nc" id="L44">	    	      .nextLong(startEpochDay, endEpochDay);</span>
+<span class="nc" id="L45">	    return LocalDate.ofEpochDay(randomDay);</span>
+	}
+	
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+<span class="nc" id="L51">		response.setContentType(&quot;text/html&quot;);</span>
+<span class="nc" id="L52">		response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+
+<span class="nc" id="L54">		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();</span>
+
+		Entity e;
+		// Create Petitions 
+		//pet 1
+<span class="nc" id="L59">		e = new Entity(&quot;Petition&quot;, &quot;P&quot; + 1);</span>
+<span class="nc" id="L60">		e.setProperty(&quot;titre&quot;,&quot;titre1&quot;);</span>
+<span class="nc" id="L61">		e.setProperty(&quot;description&quot;, &quot;description1&quot;);</span>
+<span class="nc" id="L62">		e.setProperty(&quot;image&quot;, &quot;https://static-cse.canva.com/blob/187617/free-stock-photos.jpg&quot;);</span>
+<span class="nc" id="L63">		e.setProperty(&quot;objectif&quot;,1);</span>
+<span class="nc" id="L64">		e.setProperty(&quot;auteur&quot;,&quot;auteur1&quot;);</span>
+<span class="nc" id="L65">		e.setProperty(&quot;dateCrea&quot;,&quot;01/01/2022&quot;);</span>
+<span class="nc" id="L66">		e.setProperty(&quot;nbSignature&quot;,1);</span>
+<span class="nc" id="L67">		datastore.put(e);</span>
+<span class="nc" id="L68">		response.getWriter().print(&quot;&lt;li&gt; nouvelle petition :&quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+
+		//pet 2
+<span class="nc" id="L71">		e = new Entity(&quot;Petition&quot;, &quot;P&quot; + 2);</span>
+<span class="nc" id="L72">		e.setProperty(&quot;titre&quot;,&quot;titre2&quot;);</span>
+<span class="nc" id="L73">		e.setProperty(&quot;description&quot;, &quot;description2&quot;);</span>
+<span class="nc" id="L74">		e.setProperty(&quot;image&quot;, &quot;https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive-960x540.jpg&quot;);</span>
+<span class="nc" id="L75">		e.setProperty(&quot;objectif&quot;,2);</span>
+<span class="nc" id="L76">		e.setProperty(&quot;auteur&quot;,&quot;auteur2&quot;);</span>
+<span class="nc" id="L77">		e.setProperty(&quot;dateCrea&quot;,&quot;02/02/2022&quot;);</span>
+<span class="nc" id="L78">		e.setProperty(&quot;nbSignature&quot;,2);</span>
+<span class="nc" id="L79">		datastore.put(e);</span>
+<span class="nc" id="L80">		response.getWriter().print(&quot;&lt;li&gt; nouvelle petition :&quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+
+		//pet 3
+<span class="nc" id="L83">		e = new Entity(&quot;Petition&quot;, &quot;P&quot; + 3);</span>
+<span class="nc" id="L84">		e.setProperty(&quot;titre&quot;,&quot;titre1&quot;);</span>
+<span class="nc" id="L85">		e.setProperty(&quot;description&quot;, &quot;description1&quot;);</span>
+<span class="nc" id="L86">		e.setProperty(&quot;image&quot;, &quot;https://img.fotocommunity.com/les-coquelicots-de-warlaing-727050f3-8719-40fc-a218-824a29733583.jpg?height=1080&quot;);</span>
+<span class="nc" id="L87">		e.setProperty(&quot;objectif&quot;,3);</span>
+<span class="nc" id="L88">		e.setProperty(&quot;auteur&quot;,&quot;auteur3&quot;);</span>
+<span class="nc" id="L89">		e.setProperty(&quot;dateCrea&quot;,&quot;03/03/2022&quot;);</span>
+<span class="nc" id="L90">		e.setProperty(&quot;nbSignature&quot;,3);</span>
+<span class="nc" id="L91">		datastore.put(e);</span>
+<span class="nc" id="L92">		response.getWriter().print(&quot;&lt;li&gt; nouvelle petition :&quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+
+		//pet 4
+<span class="nc" id="L95">		e = new Entity(&quot;Petition&quot;, &quot;P&quot; + 4);</span>
+<span class="nc" id="L96">		e.setProperty(&quot;titre&quot;,&quot;titre4&quot;);</span>
+<span class="nc" id="L97">		e.setProperty(&quot;description&quot;, &quot;description1&quot;);</span>
+<span class="nc" id="L98">		e.setProperty(&quot;image&quot;, &quot;https://palam.ca/wp-content/uploads/2018/11/D%C3%A9couvrez-trois-sites-d%E2%80%99images-gratuites-libre-de-droit-pour-votre-cr%C3%A9ativit%C3%A9e.jpg&quot;);</span>
+<span class="nc" id="L99">		e.setProperty(&quot;objectif&quot;,4);</span>
+<span class="nc" id="L100">		e.setProperty(&quot;auteur&quot;,&quot;auteur4&quot;);</span>
+<span class="nc" id="L101">		e.setProperty(&quot;dateCrea&quot;,&quot;04/04/2022&quot;);</span>
+<span class="nc" id="L102">		e.setProperty(&quot;nbSignature&quot;,4);</span>
+<span class="nc" id="L103">		datastore.put(e);</span>
+<span class="nc" id="L104">		response.getWriter().print(&quot;&lt;li&gt; nouvelle petition :&quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+<span class="nc" id="L105">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

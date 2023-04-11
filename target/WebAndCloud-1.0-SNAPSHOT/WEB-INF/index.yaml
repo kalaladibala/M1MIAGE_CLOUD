@@ -1,0 +1,11 @@
+indexes:
+
+- kind: Petition
+  properties:
+    - name: nbSignataire   
+      direction: desc
+    - name: description
+    - name: objectifSignataire
+    - name: proprietaire
+    - name: titre
+    - name: img_url
