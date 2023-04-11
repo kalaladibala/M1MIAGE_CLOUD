@@ -16,22 +16,19 @@
 * site web
 <br>
 page d'accueil
-<img src= "/scren/home.png">
+![home](https://user-images.githubusercontent.com/97503506/231291999-1506f072-3804-418a-97b8-26ef2e542063.png)
+
 
 créer une pétition
-<img src= "/scren/createpet.png">
+![ajout](https://user-images.githubusercontent.com/97503506/231292007-4b196949-1cb9-4d82-a6e0-44622cb31558.png)
 
-pétition créée
-<img src= "/scren/petitioncréée.png">
-
-apercu site web sans connexion
-<img src= "/scren/petitionsansconnexion.png">
-</br>
+détaille pétition
+![de](https://user-images.githubusercontent.com/97503506/231292004-1b7a0cb9-de88-4233-b048-9dd63110b22f.png)
 
 
 * kind
 <br>
-<img src= "/screen/image.png">
+![image](https://user-images.githubusercontent.com/97503506/231292890-ef18bb04-9282-4bc3-99fa-550227ff6277.png)
 
 </br>
 ## Fonctionnalités
